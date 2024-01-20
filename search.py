@@ -1,40 +1,74 @@
 from search_node import search_node
+import heapq
+
+
+class OpenList:
+
+    def __init__(self):
+        self.dic = {}
+        self.lst = []
+
+    def getMap(self):
+        return self.dic
+
+    def getLst(self):
+        return self.lst
+
+    def isNotEmpty(self):
+        return self.lst != []
 
 
 def create_open_set():
-    pass
+    return OpenList()
 
 
 def create_closed_set():
-    pass
+    return {}
 
 
 def add_to_open(vn, open_set):
-    pass
+    heapq.heappush(open_set.getLst(), vn)
+    open_set.getMap()[vn] = vn.g
 
 
 def open_not_empty(open_set):
-    pass
+    return open_set.isNotEmpty()
 
 
 def get_best(open_set):
-    pass
+    value = heapq.heappop(open_set.getLst())
+    open_set.getMap().pop(value)
+    return value
 
 
 def add_to_closed(vn, closed_set):
-    pass
+    closed_set[vn] = vn.g
 
 
 # returns False if curr_neighbor state not in open_set or has a lower g from the node in open_set
 # remove the node with the higher g from open_set (if exists)
 def duplicate_in_open(vn, open_set):
-    pass
+    dic, lst = open_set.getMap(), open_set.getLst()
+
+    x =  vn not in dic
+    y = vn.g
+    z =  dic.get(vn)
+
+
+    if vn not in dic or vn.g >=  dic.get(vn):
+        return False
+    lst.pop(lst.index(vn))
+    dic.pop(vn)
+    return True
 
 
 # returns False if curr_neighbor state not in closed_set or has a lower g from the node in closed_set
 # remove the node with the higher g from closed_set (if exists)
 def duplicate_in_closed(vn, closed_set):
-    pass
+    if vn not in closed_set or vn.g >= closed_set[vn]:
+        return False
+    closed_set.pop(vn)
+    return True
 
 
 def print_path(path):

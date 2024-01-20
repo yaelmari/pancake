@@ -20,7 +20,7 @@ class pancake_state:
                 new_neighbor_list[p] = pancake_list[i - p]
 
             # Convert the list back to a string and append the cost that will always be 1
-            neighbors.append(((','.join(new_neighbor_list)), 1))
+            neighbors.append((pancake_state(','.join(new_neighbor_list)),1))
 
         return neighbors
 
@@ -31,6 +31,11 @@ class pancake_state:
     # you can change the body of the function if you want
     def __eq__(self, other):
         return self.state_str == other.state_str
+
+
+    def __lt__(self, other):
+        # Custom comparison based on age for the min heap
+        return self.f < other.f
 
     def get_state_str(self):
         return self.state_str
