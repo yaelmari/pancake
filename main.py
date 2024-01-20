@@ -5,9 +5,11 @@ from heuristics import *
 
 if __name__ == '__main__':
     goal_state = "7,6,5,4,3,2,1"
+    # pancake_input = "7,6,5,4,1,2,3"
+    pancake_input = "7,6,4,5,1,2,3"
+    # goal_state = "4,3,2,1"
     # pancake_input = "4,2,3,1"
-    # pancake_input = "2,4,3,1"
-    pancake_input = "7,6,5,4,1,2,3"
+    # pancake_input = "4,2,1,3"
     pancake_state = pancake_state(pancake_input)
     temp = pancake_state
     # while temp.

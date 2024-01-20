@@ -11,13 +11,16 @@ class pancake_state:
         neighbors = []
 
         # Iterate through each level and flip the pancakes
-        for i in range(1, len(pancake_list)):
+        for i in range(1, len(pancake_list) - 1):
             # Create a copy of the original list to avoid modifying it
             new_neighbor_list = pancake_list.copy()
 
             # flip the pancakes
-            for p in range(0, i + 1):
-                new_neighbor_list[p] = pancake_list[i - p]
+            # for p in range(0, i + 1):
+            temp_for_flip = len(pancake_list) - 1
+            for p in range(i, len(pancake_list)):
+                new_neighbor_list[p] = pancake_list[temp_for_flip]
+                temp_for_flip -= 1
 
             # Convert the list back to a string and append the cost that will always be 1
             neighbors.append((pancake_state(','.join(new_neighbor_list)),1))
