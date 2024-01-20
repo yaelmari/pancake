@@ -24,24 +24,26 @@ def get_best(open_set):
 def add_to_closed(vn, closed_set):
     pass
 
-#returns False if curr_neighbor state not in open_set or has a lower g from the node in open_set
-#remove the node with the higher g from open_set (if exists)
+
+# returns False if curr_neighbor state not in open_set or has a lower g from the node in open_set
+# remove the node with the higher g from open_set (if exists)
 def duplicate_in_open(vn, open_set):
     pass
 
-#returns False if curr_neighbor state not in closed_set or has a lower g from the node in closed_set
-#remove the node with the higher g from closed_set (if exists)
+
+# returns False if curr_neighbor state not in closed_set or has a lower g from the node in closed_set
+# remove the node with the higher g from closed_set (if exists)
 def duplicate_in_closed(vn, closed_set):
     pass
 
+
 def print_path(path):
-    for i in range(len(path)-1):
+    for i in range(len(path) - 1):
         print(f"[{path[i].state.get_state_str()}]", end=", ")
     print(path[-1].state.state_str)
 
 
 def search(start_state, heuristic, goal_state):
-
     open_set = create_open_set()
     closed_set = create_closed_set()
     start_node = search_node(start_state, 0, heuristic(start_state))
@@ -67,7 +69,3 @@ def search(start_state, heuristic, goal_state):
                 add_to_open(curr_neighbor, open_set)
 
     return None
-
-
-
-
