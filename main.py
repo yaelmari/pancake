@@ -9,10 +9,10 @@ if __name__ == '__main__':
     # pancake_input = "3,5,6,4,2,7,1,8"
     # goal_state = "8,7,6,5,4,3,2,1"
     # pancake_input ="7,2,6,4,3,9,5,1,8"
-    goal_state = "9,8,7,6,5,4,3,2,1"
-    pancake_input = "5,9,1,8,2,7,3,6,4"
-    # goal_state = "6,5,4,3,2,1"
-    # pancake_input = "6,4,2,5,3,1"
+    # goal_state = "9,8,7,6,5,4,3,2,1"
+    # pancake_input = "5,9,1,8,2,7,3,6,4"
+    goal_state = "6,5,4,3,2,1"
+    pancake_input = "6,4,2,5,3,1"
     # pancake_input = "8,7,6,5,4,2,1,3"
 
     #
@@ -39,15 +39,16 @@ if __name__ == '__main__':
     heuristic = heuristics.advanced_heuristic(pancake_state)
 
     # print(heuristic)
-    search_result = search(pancake_state, advanced_heuristic, goal_state)
+    search_result = search(pancake_state, base_heuristic, goal_state)
     end_time = time.time()
     x =0
-    # for i in search_result:
-    #     print("stage: " + str(x))
-    #     print(i.state.state_str)
-    #     print("H: "+str(i.h))
-    #     x+=1
-    #     print("_____________________")
+    for i in search_result:
+        print("stage: " + str(x))
+        print(i.state.state_str)
+        print("H: "+str(i.h))
+        print("G: "+str(i.g))
+        x+=1
+        print("_____________________")
 
     elapsed_time = end_time - start_time
     print(f"Elapsed Time: {elapsed_time} seconds")

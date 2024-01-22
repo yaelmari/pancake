@@ -1,12 +1,12 @@
 class pancake_state:
 
-    key = 0
+
     def __init__(self, state_str, flip_index=-1):
         if isinstance(state_str, str):
             self.state_str = state_str
-            self.stateAsInts = list(map(int, state_str.split(',')))
+            self.stateAsInts = list(map(int,state_str.split(',') ))
             self.flip_index = flip_index
-            self.hashValue = pancake_state
+
 
         # you may add data structures to improve the search
 
