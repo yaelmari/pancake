@@ -28,7 +28,7 @@ def create_closed_set():
 
 def add_to_open(vn, open_set):
     heapq.heappush(open_set.getLst(), vn)
-    open_set.getMap()[vn.state.state_str] = vn.g
+    open_set.getMap()[vn.state.state_str] = [vn.g, vn]
     # open_set.getMap().
 
 
@@ -53,12 +53,21 @@ def duplicate_in_open(vn, open_set):
     dic, lst = open_set.getMap(), open_set.getLst()
 
     if vn.state.state_str in dic:
-        if vn.g < dic.get(vn.state.state_str):
-            lst.pop(lst.index(vn))
-            dic.pop(vn.state.state_str)
-        else:
-            boolAns = True
-    return boolAns
+        if vn.g < dic.get(vn.state.state_str)[0]:
+            # lst.pop(lst.index(vn))
+            # dic.pop(hash(vn.state))
+            dic[vn.state.state_str][0] = vn.g
+            dic[vn.state.state_str][1] = vn
+            # for i in lst:
+            #     if i.state.state_str == vn.state.state_str:
+            #         i.g = vn.g
+            #         i.f = vn.f
+            #         break
+
+        return True
+        # else:
+        #     boolAns = True
+    return False
 
 
 # returns False if curr_neighbor state not in closed_set or has a lower g from the node in closed_set
@@ -109,5 +118,6 @@ def search(start_state, heuristic, goal_state):
             curr_neighbor = search_node(neighbor, current.g + edge_cost, heuristic(neighbor), current)
             if not duplicate_in_open(curr_neighbor, open_set) and not duplicate_in_closed(curr_neighbor, closed_set):
                 add_to_open(curr_neighbor, open_set)
+
 
     return None

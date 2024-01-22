@@ -42,4 +42,6 @@ def advanced_heuristic(_pancake_state):
         total_count += count_greater
 
     return total_count
+#
+
 
