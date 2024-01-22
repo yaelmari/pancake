@@ -6,6 +6,9 @@ class search_node:
         self.f = g + h
         self.prev = prev
 
+    def __eq__(self, other):
+        return self.state.state_str == other.state.state_str
+
     def __lt__(self, other):
         return (self.f < other.f) or (self.f == other.f and self.h < other.h)
 

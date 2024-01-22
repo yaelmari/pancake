@@ -28,7 +28,8 @@ def create_closed_set():
 
 def add_to_open(vn, open_set):
     heapq.heappush(open_set.getLst(), vn)
-    open_set.getMap()[vn] = vn.g
+    open_set.getMap()[vn.state.state_str] = vn.g
+    # open_set.getMap().
 
 
 def open_not_empty(open_set):
@@ -37,38 +38,45 @@ def open_not_empty(open_set):
 
 def get_best(open_set):
     value = heapq.heappop(open_set.getLst())
-    open_set.getMap().pop(value)
+    open_set.getMap().pop(value.state.state_str)
     return value
 
 
 def add_to_closed(vn, closed_set):
-    closed_set[vn] = vn.g
+    closed_set[vn.state.state_str] = vn.g
 
 
 # returns False if curr_neighbor state not in open_set or has a lower g from the node in open_set
 # remove the node with the higher g from open_set (if exists)
 def duplicate_in_open(vn, open_set):
+    boolAns = False
     dic, lst = open_set.getMap(), open_set.getLst()
 
-    x =  vn not in dic
-    y = vn.g
-    z =  dic.get(vn)
-
-
-    if vn not in dic or vn.g >=  dic.get(vn):
-        return False
-    lst.pop(lst.index(vn))
-    dic.pop(vn)
-    return True
+    if vn.state.state_str in dic:
+        if vn.g < dic.get(vn.state.state_str):
+            lst.pop(lst.index(vn))
+            dic.pop(vn.state.state_str)
+        else:
+            boolAns = True
+    return boolAns
 
 
 # returns False if curr_neighbor state not in closed_set or has a lower g from the node in closed_set
 # remove the node with the higher g from closed_set (if exists)
 def duplicate_in_closed(vn, closed_set):
-    if vn not in closed_set or vn.g >= closed_set[vn]:
-        return False
-    closed_set.pop(vn)
-    return True
+    # if vn.state.state_str not in closed_set or vn.g >= closed_set[vn.state.state_str]:
+    #     return False
+    # closed_set.pop(vn)
+    # return True
+    boolAns = False
+
+    if vn.state.state_str in closed_set:
+        if vn.g < closed_set.get(vn.state.state_str):
+            closed_set.pop(vn.state.state_str)
+        else:
+            boolAns = True
+    return boolAns
+
 
 
 def print_path(path):
@@ -86,6 +94,7 @@ def search(start_state, heuristic, goal_state):
     while open_not_empty(open_set):
 
         current = get_best(open_set)
+        # print("expand:" + current.state.get_state_str())
 
         if current.state.get_state_str() == goal_state:
             path = []

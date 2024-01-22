@@ -19,5 +19,22 @@ def base_heuristic(_pancake_state):
     return heuristic
 
 
+# def advanced_heuristic(_pancake_state):
+#     # return 0
+#     state_str = _pancake_state.get_state_str()
+#     pancake_list = state_str.split(',')
+#     count = len(pancake_list)
+#     h = 0
+#     for i in range(count-1):
+#         if abs(int(pancake_list[i]) - int(pancake_list[i+1])) > 1:
+#             h += 1
+#
+#     return h
+
+
 def advanced_heuristic(_pancake_state):
-    return 0
+    pancake_list = _pancake_state.getStateAsInts()
+    h = sum(1 for i in range(len(pancake_list) - 1) if abs(pancake_list[i] - pancake_list[i + 1]) > 1)
+    return h
+
+
