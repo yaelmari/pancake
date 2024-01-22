@@ -34,7 +34,12 @@ def base_heuristic(_pancake_state):
 
 def advanced_heuristic(_pancake_state):
     pancake_list = _pancake_state.getStateAsInts()
-    h = sum(1 for i in range(len(pancake_list) - 1) if abs(pancake_list[i] - pancake_list[i + 1]) > 1)
-    return h
+    total_count = 0
 
+    for i in range(len(pancake_list)):
+        current_number = pancake_list[i]
+        count_greater = sum(num for num in pancake_list[i + 1:] if num > current_number)
+        total_count += count_greater
+
+    return total_count
 
