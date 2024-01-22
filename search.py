@@ -78,7 +78,6 @@ def duplicate_in_closed(vn, closed_set):
     return boolAns
 
 
-
 def print_path(path):
     for i in range(len(path) - 1):
         print(f"[{path[i].state.get_state_str()}]", end=", ")
