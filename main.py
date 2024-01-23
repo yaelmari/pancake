@@ -8,11 +8,11 @@ if __name__ == '__main__':
     # goal_state = "7,6,5,4,3,2,1"
     # pancake_input = "3,5,6,4,2,7,1,8"
     # goal_state = "8,7,6,5,4,3,2,1"
-    # pancake_input ="7,2,6,4,3,9,5,1,8"
-    # goal_state = "9,8,7,6,5,4,3,2,1"
+    pancake_input ="7,2,6,4,3,9,5,1,8"
+    goal_state = "9,8,7,6,5,4,3,2,1"
     # pancake_input = "5,9,1,8,2,7,3,6,4"
-    goal_state = "6,5,4,3,2,1"
-    pancake_input = "6,4,2,5,3,1"
+    # goal_state = "6,5,4,3,2,1"
+    # pancake_input = "6,4,5,3,2,1"
     # pancake_input = "8,7,6,5,4,2,1,3"
 
     #
