@@ -35,34 +35,34 @@ class pancake_state:
         #     return neighbors
 
         # ***** FReshie **********
-        # pancake_list = self.getStateAsInts()
-        # neighbors = []
-        # for i in range(0,len(pancake_list)-1):
-        #     bottom = pancake_list[:i]
-        #     top = pancake_list[i:][::-1]
-        #     bottom.extend(top)
-        #     # print(','.join(bottom))
-        #     neighbors.append((pancake_state(",".join(map(str, bottom))),sum(top)))
-        # return neighbors
-
         pancake_list = self.getStateAsInts()
-        curr_flip_index = self.flip_index
         neighbors = []
-
-        count = 0
-        # find
-        while count < len(pancake_list) and pancake_list[count] == (len(pancake_list) - count):
-            count += 1
-
-        for i in range(count, len(pancake_list) - 1):
-            if i == curr_flip_index:
-                continue
+        for i in range(0,len(pancake_list)-1):
             bottom = pancake_list[:i]
             top = pancake_list[i:][::-1]
             bottom.extend(top)
             # print(','.join(bottom))
-            neighbors.append((pancake_state(",".join(map(str, bottom)), i), sum(top)))
+            neighbors.append((pancake_state(",".join(map(str, bottom))),sum(top)))
         return neighbors
+
+        # pancake_list = self.getStateAsInts()
+        # curr_flip_index = self.flip_index
+        # neighbors = []
+        #
+        # count = 0
+        # # find
+        # while count < len(pancake_list) and pancake_list[count] == (len(pancake_list) - count):
+        #     count += 1
+        #
+        # for i in range(count, len(pancake_list) - 1):
+        #     if i == curr_flip_index:
+        #         continue
+        #     bottom = pancake_list[:i]
+        #     top = pancake_list[i:][::-1]
+        #     bottom.extend(top)
+        #     # print(','.join(bottom))
+        #     neighbors.append((pancake_state(",".join(map(str, bottom)), i), sum(top)))
+        # return neighbors
 
     # you can change the body of the function if you want
     def __hash__(self):

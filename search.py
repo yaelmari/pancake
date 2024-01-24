@@ -1,12 +1,15 @@
 from search_node import search_node
 import heapq
+import queue
 
 
 class OpenList:
 
     def __init__(self):
         self.dic = {}
-        self.lst = []
+        # self.lst = []
+        self.lst = queue.PriorityQueue()
+
 
     def getMap(self):
         return self.dic
@@ -27,7 +30,8 @@ def create_closed_set():
 
 
 def add_to_open(vn, open_set):
-    heapq.heappush(open_set.getLst(), vn)
+    # heapq.heappush(open_set.getLst(), vn)
+    open_set.getLst().put(vn)
     open_set.getMap()[vn.state.state_str] = [vn.g, vn]
     # open_set.getMap().
 
@@ -37,7 +41,11 @@ def open_not_empty(open_set):
 
 
 def get_best(open_set):
-    value = heapq.heappop(open_set.getLst())
+    # value = heapq.heappop(open_set.getLst())
+    value = open_set.getLst().get()
+    dic = open_set.getMap()
+    while dic.get(value.state.state_str) is None:
+        value = open_set.getLst().get()
     open_set.getMap().pop(value.state.state_str)
     return value
 
@@ -54,15 +62,18 @@ def duplicate_in_open(vn, open_set):
 
     if vn.state.state_str in dic:
         if vn.g < dic.get(vn.state.state_str)[0]:
+            dic.pop(vn.state.state_str)
             # lst.pop(lst.index(vn))
             # dic.pop(hash(vn.state))
-            dic[vn.state.state_str][0] = vn.g
-            dic[vn.state.state_str][1] = vn
+            # dic[vn.state.state_str][0] = vn.g
+            # dic[vn.state.state_str][1] = vn
             # for i in lst:
             #     if i.state.state_str == vn.state.state_str:
             #         i.g = vn.g
             #         i.f = vn.f
             #         break
+            return False
+
 
         return True
         # else:
