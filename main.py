@@ -41,7 +41,7 @@ if __name__ == '__main__':
     # print(heuristic)
     search_result = search(pancake_state, advanced_heuristic, goal_state)
     end_time = time.time()
-    x =0
+    x = 0
     for i in search_result:
         print("stage: " + str(x))
         print(i.state.state_str)

@@ -1,15 +1,11 @@
 from search_node import search_node
-import heapq
 import queue
 
 
 class OpenList:
-
     def __init__(self):
         self.dic = {}
-        # self.lst = []
         self.lst = queue.PriorityQueue()
-
 
     def getMap(self):
         return self.dic
@@ -30,10 +26,8 @@ def create_closed_set():
 
 
 def add_to_open(vn, open_set):
-    # heapq.heappush(open_set.getLst(), vn)
     open_set.getLst().put(vn)
     open_set.getMap()[vn.state.state_str] = [vn.g, vn]
-    # open_set.getMap().
 
 
 def open_not_empty(open_set):
@@ -41,11 +35,14 @@ def open_not_empty(open_set):
 
 
 def get_best(open_set):
-    # value = heapq.heappop(open_set.getLst())
     value = open_set.getLst().get()
     dic = open_set.getMap()
+    # Loop until a value with a corresponding state is found in the dictionary
     while dic.get(value.state.state_str) is None:
+        # Get the next value from the list
         value = open_set.getLst().get()
+
+    # Remove the state from the dictionary
     open_set.getMap().pop(value.state.state_str)
     return value
 
@@ -57,45 +54,29 @@ def add_to_closed(vn, closed_set):
 # returns False if curr_neighbor state not in open_set or has a lower g from the node in open_set
 # remove the node with the higher g from open_set (if exists)
 def duplicate_in_open(vn, open_set):
-    boolAns = False
+    # Get the dictionary and list from the open set
     dic, lst = open_set.getMap(), open_set.getLst()
-
+    # If the state is in the dictionary, check if the new path to this state is shorter
     if vn.state.state_str in dic:
         if vn.g < dic.get(vn.state.state_str)[0]:
+            # If the new path is shorter, remove the old entry from the dictionary
             dic.pop(vn.state.state_str)
-            # lst.pop(lst.index(vn))
-            # dic.pop(hash(vn.state))
-            # dic[vn.state.state_str][0] = vn.g
-            # dic[vn.state.state_str][1] = vn
-            # for i in lst:
-            #     if i.state.state_str == vn.state.state_str:
-            #         i.g = vn.g
-            #         i.f = vn.f
-            #         break
             return False
-
-
         return True
-        # else:
-        #     boolAns = True
     return False
 
 
 # returns False if curr_neighbor state not in closed_set or has a lower g from the node in closed_set
 # remove the node with the higher g from closed_set (if exists)
 def duplicate_in_closed(vn, closed_set):
-    # if vn.state.state_str not in closed_set or vn.g >= closed_set[vn.state.state_str]:
-    #     return False
-    # closed_set.pop(vn)
-    # return True
-    boolAns = False
-
     if vn.state.state_str in closed_set:
+        # If the state is in the closed set, check if the new path to this state is shorter
         if vn.g < closed_set.get(vn.state.state_str):
+            # If the new path is shorter, remove the old entry from the closed set
             closed_set.pop(vn.state.state_str)
-        else:
-            boolAns = True
-    return boolAns
+            return False
+        return True
+    return False
 
 
 def print_path(path):
@@ -113,7 +94,6 @@ def search(start_state, heuristic, goal_state):
     while open_not_empty(open_set):
 
         current = get_best(open_set)
-        # print("expand:" + current.state.get_state_str())
 
         if current.state.get_state_str() == goal_state:
             path = []
@@ -129,6 +109,5 @@ def search(start_state, heuristic, goal_state):
             curr_neighbor = search_node(neighbor, current.g + edge_cost, heuristic(neighbor), current)
             if not duplicate_in_open(curr_neighbor, open_set) and not duplicate_in_closed(curr_neighbor, closed_set):
                 add_to_open(curr_neighbor, open_set)
-
 
     return None

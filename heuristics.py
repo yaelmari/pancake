@@ -4,12 +4,15 @@ def base_heuristic(_pancake_state):
 
     # This variable will count from which level the pancakes aren't where they should be
     count = len(pancake_list)
+    # Initialize a boolean flag to track if the pancake stack is valid
     valid = True
     for i in range(len(pancake_list)):
         value = int(pancake_list[i])
         expected_location = len(pancake_list) - i
+        # Check if the pancake is not in its expected location and the stack is still valid
         if value != expected_location and valid:
             count = i
+            # Set the flag to indicate that the stack is no longer valid
             valid = False
 
     # Sum the values of the pancakes to get the heuristic value
@@ -20,63 +23,33 @@ def base_heuristic(_pancake_state):
     return heuristic
 
 
-# def advanced_heuristic(_pancake_state):
-#     # return 0
-#     state_str = _pancake_state.get_state_str()
-#     pancake_list = state_str.split(',')
-#     count = len(pancake_list)
-#     h = 0
-#     for i in range(count-1):
-#         if abs(int(pancake_list[i]) - int(pancake_list[i+1])) > 1:
-#             h += 1
-#
-#     return h
-
-
 def advanced_heuristic(_pancake_state):
-    pancake_list = _pancake_state.getStateAsInts()
-    total_count = 0
+    pancake_list = _pancake_state.stateAsInts
 
+    # Find the first misplaced pancake from the start
+    count_from_start = len(pancake_list)
     for i in range(len(pancake_list)):
-        current_number = pancake_list[i]
-        count_greater = sum(current_number*7/len(pancake_list) for num in pancake_list[i + 1:] if num > current_number)
-        total_count += count_greater
+        value = pancake_list[i]
+        expected_location = len(pancake_list) - i
+        if value != expected_location:
+            # Update the count indicating the number of misplaced pancakes from the start and exit the loop
+            count_from_start = i
+            break
 
-    return total_count
-#
+    # Find the first misplaced pancake from the end
+    count_from_end = 0
+    expected_location = 1
+    for i in range(len(pancake_list) - 1, count_from_start, -1):
+        value = pancake_list[i]
+        if value != expected_location:
+            # Update the count indicating the number of misplaced pancakes from the end and exit the loop
+            count_from_end = i
+            break
+        expected_location += 1
 
-# def advanced_heuristic(_pancake_state):
-#     # state_str = _pancake_state.get_state_str()
-#     # pancake_list = state_str.split(',')
-#     pancake_list = _pancake_state.stateAsInts
-#
-#     # This variable will count from which level the pancakes aren't where they should be
-#     count_from_start = len(pancake_list)
-#     for i in range(len(pancake_list)):
-#         # value = int(pancake_list[i])
-#         value = pancake_list[i]
-#         expected_location = len(pancake_list) - i
-#         if value != expected_location:
-#             count_from_start = i
-#             break
-#
-#     count_from_end = 0
-#     expected_location = 1
-#     for i in range(len(pancake_list) - 1, count_from_start, -1):
-#         # value = int(pancake_list[i])
-#         value = pancake_list[i]
-#         if value != expected_location:
-#             count_from_end = i
-#             break
-#         expected_location += 1
-#
-#         # Sum the values of the pancakes to get the heuristic value
-#     heuristic = 0
-#     for n in range(count_from_start, count_from_end + 1):
-#         heuristic += int(pancake_list[n]) # base heuristic
-#
-#     # heuristic *= 3
-#     # heuristic += 2 * sum(pancake_list[count_from_start:])
-#
-#
-#     return heuristic
+    #  Calculate the heuristic value by summing the values of the misplaced pancakes
+    heuristic = 0
+    for n in range(count_from_start, count_from_end + 1):
+        heuristic += int(pancake_list[n])
+
+    return heuristic

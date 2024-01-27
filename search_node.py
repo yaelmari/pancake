@@ -10,10 +10,15 @@ class search_node:
         return self.state.state_str == other.state.state_str
 
     def __lt__(self, other):
-        return (self.f < other.f) or (self.f == other.f and self.h < other.h)
+        if self.f < other.f:
+            return True
+        elif self.f == other.f and self.h < other.h:
+            return True
+        return False
 
     def get_neighbors(self):
         return self.state.get_neighbors()
 
     def __hash__(self):
         return hash(self.state.state_str)
+
